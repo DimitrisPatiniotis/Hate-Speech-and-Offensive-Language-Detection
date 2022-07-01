@@ -39,10 +39,11 @@ class DataLoader():
         offensive_under = offensive_language.drop(offensive_drop_indx)
         self.tweets = pd.concat([neither, hate_under, offensive_under])
 
-    def load(self, print_details=False):
+    def load(self, print_details=False, undersample=True):
         # load
         self.tweets = load_data(print_info=print_details)
-        self.undersample()
+        if undersample:
+            self.undersample()
         # clean
         if self.clean_tweets:
             if print_details:
@@ -61,7 +62,7 @@ class DataLoader():
         self.X_train_unchanged = self.X_train
 
     def bag_of_words(self):
-        vectorizer = CountVectorizer(analyzer="word", ngram_range=(self.n_gram,self.n_gram))
+        vectorizer = CountVectorizer(analyzer="word",  ngram_range=(self.n_gram,self.n_gram))
         self.X_train = vectorizer.fit_transform(self.X_train)
         self.X_test = vectorizer.transform(self.X_test)
 

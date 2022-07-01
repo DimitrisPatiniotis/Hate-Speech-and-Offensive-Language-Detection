@@ -6,7 +6,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score,ConfusionMatrixDisplay
 
 # LSTM imports
 from keras.models import Sequential
@@ -36,6 +36,12 @@ def naive_bayes_model(dataloader, print_report=True):
     if print_report:
         print('Naive Bayes Model Report:')
         print(classification_report(dataloader.y_test,pred,target_names=[num_to_class[i] for i in range(3)]))
+
+    cm = confusion_matrix(dataloader.y_test, pred, labels= model.classes_)
+    display = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=num_to_class.values())
+    display.plot()
+    plt.title('Naive Bayes Confusion Matrix')
+    plt.show()
     return model
 
 def logistic_regression_model(dataloader, print_report=True):
@@ -65,6 +71,12 @@ def random_forest_model(dataloader, print_report=True):
     if print_report:
         print('Random Forest Report:')
         print(classification_report(dataloader.y_test,pred,target_names=[num_to_class[i] for i in range(3)]))
+
+    cm = confusion_matrix(dataloader.y_test, pred, labels= model.classes_)
+    display = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=num_to_class.values())
+    display.plot()
+    plt.title('RF Confusion Matrix')
+    plt.show()
     return model
     
 def adaboost_model(dataloader, print_report=True):
