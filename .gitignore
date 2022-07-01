@@ -1,0 +1,7 @@
+__pycache__/
+venv/
+labeled_data.csv
+4/
+helper.py
+images/
+3/
